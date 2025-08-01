@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>จักรวาลแห่งความรัก - Surprise</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #000011 0%, #000000 80%);
+      font-family: 'Itim', cursive;
+      color: white;
+      user-select: none;
+      position: relative;
+    }
+
+    /* ดาวกระพริบตามเมาส์ */
+    .star-particle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #fff 60%, transparent 90%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.9;
+      animation: twinkle 1.5s infinite ease-in-out;
+      will-change: transform, opacity;
+      filter: drop-shadow(0 0 3px #ff99cc);
+      z-index: 9999;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.9;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* ดาวตก */
+    .shooting-star {
+      position: fixed;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0));
+      top: 0;
+      left: 0;
+      opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px #ff99cc);
+      animation: shooting 1.2s linear forwards;
+      z-index: 9998;
+    }
+
+    @keyframes shooting {
+      0% {
+        transform: translate(0, 0) rotate(45deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(800px, 400px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    .next-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ff69b4;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 30px;
+      font-family: 'Itim', cursive;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+      z-index: 9999;
+    }
+
+    .next-button:hover {
+      background-color: #ff1493;
+    }
+
+    /* ระบบดาวใหญ่ตรงกลางและดาวเล็กหมุนรอบ */
+    .planetary-system {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .main-planet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      transform: translate(-50%, -50%) scale(1);
+      box-shadow:
+        0 0 30px #ff66aa,
+        inset 0 0 30px #ff99cc;
+      cursor: default;
+      animation: pulse 3s infinite;
+      z-index: 30;
+      pointer-events: auto; /* เพื่อให้ปุ่มข้างในกดได้ */
+    }
+
+    .main-planet img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+    }
+
+    /* ปุ่มเล่นเพลงตรงกลางรูปหลัก */
+    #play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 105, 180, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      color: white;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px #ff69b4;
+      z-index: 40;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #play-button:hover {
+      background: rgba(255, 20, 147, 0.9);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+
+    /* เส้นวงโคจร */
+    .orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 1.5px dashed rgba(255, 105, 180, 0.3);
+      border-radius: 50%;
+      transform-origin: center center;
+      pointer-events: none;
+    }
+
+    .orbit1 {
+      width: 300px;
+      height: 300px;
+      margin-left: -150px;
+      margin-top: -150px;
+    }
+
+    .orbit2 {
+      width: 360px;
+      height: 360px;
+      margin-left: -180px;
+      margin-top: -180px;
+    }
+
+    .orbit3 {
+      width: 420px;
+      height: 420px;
+      margin-left: -210px;
+      margin-top: -210px;
+    }
+
+    .orbit4 {
+      width: 480px;
+      height: 480px;
+      margin-left: -240px;
+      margin-top: -240px;
+    }
+
+    .orbit5 {
+      width: 540px;
+      height: 540px;
+      margin-left: -270px;
+      margin-top: -270px;
+    }
+
+    .orbit6 {
+      width: 600px;
+      height: 600px;
+      margin-left: -300px;
+      margin-top: -300px;
+    }
+
+    .orbit7 {
+      width: 660px;
+      height: 660px;
+      margin-left: -330px;
+      margin-top: -330px;
+    }
+
+    /* ดาวเล็กที่โคจร */
+    .orbiting-planet {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      margin: -30px 0 0 -30px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 10px #ff99cc;
+      background: transparent;
+      cursor: pointer;
+      animation-timing-function: linear;
+      z-index: 20;
+    }
+
+    .orbiting-planet img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    /* Animation หมุนโคจร */
+    @keyframes orbit1 {
+      from {
+        transform: rotate(0deg) translateX(150px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(150px) rotate(-360deg);
+      }
+    }
+
+    @keyframes orbit2 {
+      from {
+        transform: rotate(0deg) translateX(180px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(180px) rotate(-180deg);
+      }
+    }
+
+    @keyframes orbit3 {
+      from {
+        transform: rotate(0deg) translateX(210px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(210px) rotate(-210deg);
+      }
+    }
+
+    @keyframes orbit4 {
+      from {
+        transform: rotate(0deg) translateX(240px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(240px) rotate(-240deg);
+      }
+    }
+
+    @keyframes orbit5 {
+      from {
+        transform: rotate(0deg) translateX(270px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(270px) rotate(-270deg);
+      }
+    }
+
+    @keyframes orbit6 {
+      from {
+        transform: rotate(0deg) translateX(300px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(300px) rotate(-300deg);
+      }
+    }
+
+    @keyframes orbit7 {
+      from {
+        transform: rotate(0deg) translateX(330px) rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg) translateX(330px) rotate(-330deg);
+      }
+    }
+
+    /* กำหนด animation ให้ดาวแต่ละวง */
+    .orbiting-planet.orbit1 {
+      animation: orbit1 15s linear infinite;
+    }
+
+    .orbiting-planet.orbit2 {
+      animation: orbit2 20s linear infinite reverse;
+    }
+
+    .orbiting-planet.orbit3 {
+      animation: orbit3 25s linear infinite;
+    }
+
+    .orbiting-planet.orbit4 {
+      animation: orbit4 18s linear infinite reverse;
+    }
+
+    .orbiting-planet.orbit5 {
+      animation: orbit5 30s linear infinite;
+    }
+
+    .orbiting-planet.orbit6 {
+      animation: orbit6 35s linear infinite reverse;
+    }
+
+    .orbiting-planet.orbit7 {
+      animation: orbit7 40s linear infinite;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .planetary-system {
+        width: 280px;
+        height: 280px;
+      }
+
+      .main-planet {
+        width: 100px;
+        height: 100px;
+      }
+
+      /* ลดขนาดวงโคจรลงกว่าเดิม */
+      .orbit1 {
+        width: 180px;
+        height: 180px;
+        margin-left: -90px;
+        margin-top: -90px;
+      }
+
+      .orbit2 {
+        width: 210px;
+        height: 210px;
+        margin-left: -105px;
+        margin-top: -105px;
+      }
+
+      .orbit3 {
+        width: 240px;
+        height: 240px;
+        margin-left: -120px;
+        margin-top: -120px;
+      }
+
+      .orbit4 {
+        width: 270px;
+        height: 270px;
+        margin-left: -135px;
+        margin-top: -135px;
+      }
+
+      .orbit5 {
+        width: 300px;
+        height: 300px;
+        margin-left: -150px;
+        margin-top: -150px;
+      }
+
+      .orbit6 {
+        width: 330px;
+        height: 330px;
+        margin-left: -165px;
+        margin-top: -165px;
+      }
+
+      .orbit7 {
+        width: 360px;
+        height: 360px;
+        margin-left: -180px;
+        margin-top: -180px;
+      }
+
+
+      /* เพิ่มขนาดดาวเล็กใหญ่มากขึ้น */
+      .orbiting-planet.orbit5,
+      .orbiting-planet.orbit6,
+      .orbiting-planet.orbit7 {
+        width: 28px !important;
+        height: 28px !important;
+        margin: -14px 0 0 -14px !important;
+      }
+
+      .orbiting-planet {
+        width: 32px !important;
+        height: 32px !important;
+        margin: -16px 0 0 -16px !important;
+      }
+
+      /* ปรับ keyframes ให้สัมพันธ์กับวงโคจรที่ลดลง */
+      @keyframes orbit1 {
+        from {
+          transform: rotate(0deg) translateX(90px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(90px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit2 {
+        from {
+          transform: rotate(0deg) translateX(105px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(105px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit3 {
+        from {
+          transform: rotate(0deg) translateX(120px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(120px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit4 {
+        from {
+          transform: rotate(0deg) translateX(135px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(135px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit5 {
+        from {
+          transform: rotate(0deg) translateX(150px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(150px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit6 {
+        from {
+          transform: rotate(0deg) translateX(165px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(165px) rotate(-360deg);
+        }
+      }
+
+      @keyframes orbit7 {
+        from {
+          transform: rotate(0deg) translateX(180px) rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg) translateX(180px) rotate(-360deg);
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="final.html" class="next-button">ไปหน้าต่อไป ➜</a>
+
+  <div class="planetary-system">
+    <div class="main-planet" id="main-planet">
+      <img id="main-planet-img" src="../img/icon_music.png" alt="แฟนสุดที่รัก" />
+      <button id="play-button" title="เล่นเพลง"></button>
+    </div>
+
+    <!-- เส้นวงโคจร -->
+    <div class="orbit orbit1"></div>
+    <div class="orbit orbit2"></div>
+    <div class="orbit orbit3"></div>
+    <div class="orbit orbit4"></div>
+    <div class="orbit orbit5"></div>
+    <div class="orbit orbit6"></div>
+    <div class="orbit orbit7"></div>
+
+    <!-- ดาวเล็กโคจร พร้อมรูป -->
+    <div class="orbiting-planet orbit1">
+      <img src="../img/1.jpg" alt="รูปเล็ก 1" />
+    </div>
+    <div class="orbiting-planet orbit2">
+      <img src="../img/11.jpg" alt="รูปเล็ก 2" />
+    </div>
+    <div class="orbiting-planet orbit3">
+      <img src="../img/4.jpg" alt="รูปเล็ก 3" />
+    </div>
+    <div class="orbiting-planet orbit4">
+      <img src="../img/5.jpg" alt="รูปเล็ก 4" />
+    </div>
+    <div class="orbiting-planet orbit5">
+      <img src="../img/6.jpg" alt="รูปเล็ก 5" />
+    </div>
+    <div class="orbiting-planet orbit6">
+      <img src="../img/7.jpg" alt="รูปเล็ก 6" />
+    </div>
+    <div class="orbiting-planet orbit7">
+      <img src="../img/9.jpg" alt="รูปเล็ก 7" />
+    </div>
+  </div>
+
+  <!-- ดาวกระพริบตามเมาส์ -->
+  <script>
+    (() => {
+      const stars = [];
+      const maxStars = 20;
+      document.body.addEventListener('mousemove', e => {
+        for (let i = 0; i < 3; i++) {
+          if (stars.length > maxStars) {
+            const old = stars.shift();
+            old.element.remove();
+          }
+          const star = document.createElement('div');
+          star.classList.add('star-particle');
+          star.style.left = (e.clientX + (Math.random() - 0.5) * 30) + 'px';
+          star.style.top = (e.clientY + (Math.random() - 0.5) * 30) + 'px';
+          star.style.width = star.style.height = (Math.random() * 6 + 3) + 'px';
+          document.body.appendChild(star);
+          stars.push({ element: star, life: 1000, created: Date.now() });
+        }
+      });
+
+      setInterval(() => {
+        const now = Date.now();
+        for (let i = stars.length - 1; i >= 0; i--) {
+          if (now - stars[i].created > stars[i].life) {
+            stars[i].element.remove();
+            stars.splice(i, 1);
+          }
+        }
+      }, 100);
+    })();
+  </script>
+
+  <!-- ดาวตก -->
+  <script>
+    (() => {
+      function createShootingStar() {
+        const star = document.createElement('div');
+        star.classList.add('shooting-star');
+        star.style.top = (Math.random() * window.innerHeight * 0.7) + 'px';
+        star.style.left = '-150px';
+        document.body.appendChild(star);
+        star.addEventListener('animationend', () => {
+          star.remove();
+        });
+      }
+      setInterval(() => {
+        if (Math.random() < 0.4) createShootingStar();
+      }, 3000);
+    })();
+  </script>
+
+  <!-- ดวงดาวก้อนเมฆในพื้นหลังเคลื่อนไหว -->
+  <script>
+    (() => {
+      const galaxyCount = 1500;
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = 0;
+      container.style.left = 0;
+      container.style.width = '100vw';
+      container.style.height = '100vh';
+      container.style.zIndex = 0;
+      container.style.pointerEvents = 'none';
+      document.body.appendChild(container);
+
+      for (let i = 0; i < galaxyCount; i++) {
+        const star = document.createElement('div');
+        star.style.position = 'absolute';
+        star.style.width = star.style.height = Math.random() * 1.5 + 0.2 + 'px';
+        star.style.borderRadius = '50%';
+        star.style.background = 'radial-gradient(circle, #fff, transparent)';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.opacity = Math.random() * 0.8 + 0.2;
+        container.appendChild(star);
+      }
+    })();
+  </script>
+
+  <!-- เพลงและปุ่มเล่นเพลง -->
+  <audio id="bg-music" loop>
+    <source src="../img/music_love.mp4" type="audio/mpeg" />
+    เบราว์เซอร์ของคุณไม่รองรับเสียงเพลง
+  </audio>
+
+  <script>
+    const playButton = document.getElementById('play-button');
+    const audio = document.getElementById('bg-music');
+    const mainPlanetImg = document.getElementById('main-planet-img');
+
+    playButton.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play().catch(e => {
+          // ถ้า autoplay ถูกบล็อกให้แจ้ง
+          alert('กดเล่นเพลงอีกครั้งหากเพลงไม่เล่นอัตโนมัติ');
+        });
+        // เปลี่ยนรูปหลักเมื่อเริ่มเล่นเพลง
+        mainPlanetImg.src = '../img/22.jpg';
+        // ซ่อนปุ่มเล่นเพลงหลังคลิก
+        playButton.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>

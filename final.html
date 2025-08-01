@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>หน้าสุดท้าย</title>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Itim', cursive;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow-x: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .book {
+      width: 60vw;
+      height: 90vh;
+      display: flex;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 5;
+    }
+
+    .page {
+      flex: 1;
+      padding: 2rem;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-size: 1.4rem;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+
+    .left-page {
+      transform-origin: right center;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .right-page {
+      border-radius: 0 12px 12px 0;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .left-page.flipping {
+      transform: rotateY(-90deg);
+    }
+
+    .left-page img,
+    .left-page video {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid white;
+      padding: 10px 20px;
+      color: white;
+      font-family: 'Itim', cursive;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      user-select: none;
+      z-index: 10;
+    }
+
+    .nav-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out alternate;
+      opacity: 0.8;
+    }
+
+    @keyframes twinkle {
+      0% {
+        opacity: 0.2;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    .shooting-star {
+      position: fixed;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(45deg, white, rgba(255, 255, 255, 0));
+      border-radius: 50%;
+      transform: rotate(45deg);
+      animation: shooting 5s linear infinite;
+      opacity: 0.8;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes shooting {
+      from {
+        transform: translate(-150px, -150px) rotate(45deg);
+        opacity: 1;
+      }
+
+      to {
+        transform: translate(150vw, 150vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .book {
+        width: 90vw;
+        height: 70vh;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+      }
+
+      .page {
+        flex: none;
+        width: 100%;
+        height: 44%;
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 0;
+        justify-content: center;
+        overflow-y: auto;
+      }
+
+      .left-page {
+        border-radius: 10px 10px 0 0;
+        transform-origin: center center !important;
+      }
+
+      .right-page {
+        border-radius: 0 0 10px 10px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .left-page.flipping {
+        transform: none !important;
+      }
+
+      .left-page img,
+      .left-page video {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      .nav-button {
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        top: auto;
+        padding: 8px 16px;
+        font-size: 1rem;
+        border-radius: 25px;
+        z-index: 20;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ดาวระยิบ -->
+  <script>
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+      document.body.appendChild(star);
+    }
+
+    // ดาวตกเฉียง
+    for (let i = 0; i < 8; i++) {
+      const shooting = document.createElement('div');
+      shooting.className = 'shooting-star';
+      shooting.style.top = `${Math.random() * 50}vh`;
+      shooting.style.left = `-${Math.random() * 200}px`;
+      shooting.style.animationDuration = `${3 + Math.random() * 2}s`;
+      shooting.style.animationDelay = `${i * 3 + Math.random() * 2}s`;
+      document.body.appendChild(shooting);
+    }
+  </script>
+
+  <!-- Book Layout -->
+  <div class="book">
+    <div class="page left-page">
+      <video src="../img/jay.mp4" controls autoplay loop muted playsinline></video>
+    </div>
+    <div class="page right-page">
+      <p>สุขสันต์วันเกิดนะ <img src="../img/icon_cake.png" alt="เค้ก" style="width:50px; vertical-align:bottom;">
+      </p>
+      <p>ขอให้เธอแข็งแรงทั้งกายและใจ </p>
+      <p> ขอให้ทุกวันเป็นวันที่เธอรู้สึกปลอดภัยและอบอุ่น  </p>
+      <p>ขอให้มีวันที่ดี ไม่เจอเรื่องหนักใจมากเกินไป 💫</p>
+      <p>ขอให้เธอมีรอยยิ้มในทุกวัน และความสุขในทุกย่างก้าว</p>
+      <p>อย่าลืมพักผ่อนดูแลตัวเองเยอะๆ น้องหนูของพี่ </p>
+    </div>
+
+    <button class="nav-button" onclick="nextPage()">หน้าต่อไป</button>
+  </div>
+
+ <script>
+const pages = [
+  {
+    img: '../img/12.jpg',
+    text: `เค้าอยากบอกว่า... เธอคือความสุขที่สว่างที่สุดบนฟ้า`
+  },
+  {
+    img: '../img/12.jpg',
+    text: `ความทรงจำกับเธอ เหมือนดาวระยิบระยับในใจเค้า`
+  },
+  {
+    img: '../img/12.jpg',
+    text: `ไม่ว่าอะไรจะเกิดขึ้น เค้าก็จะอยู่ข้างๆ เธอเสมอ`
+  },
+  {
+    img: '../img/12.jpg',
+    text: `สุขสันต์วันเกิดอีกครั้ง ขอให้เธอพบเจอแต่สิ่งดีๆ 🤍`
+  },
+  {
+    img: '../img/12.jpg',
+    text: `สุดท้าย... เค้ารักเธอมากนะ 🥺✨`
+  }
+];
+
+
+  let currentPage = 1;
+
+  function nextPage() {
+    const leftPage = document.querySelector('.left-page');
+    const rightPage = document.querySelector('.right-page');
+    const btn = document.querySelector('.nav-button');
+
+    if (currentPage >= pages.length) {
+      btn.style.display = "none";
+      return;
+    }
+
+    leftPage.classList.add('flipping');
+
+    setTimeout(() => {
+      leftPage.innerHTML = `<img src="${pages[currentPage].img}" alt="pic" style="width:100%; height:auto; border-radius:8px;">`;
+      rightPage.innerHTML = `<p>${pages[currentPage].text}</p>`;
+      leftPage.classList.remove('flipping');
+      currentPage++;
+    }, 600);
+  }
+</script>
+
+  <!-- 🎵 เล่นเพลงเมื่อผู้ใช้แตะหน้าจอ -->
+  <audio id="bg-music" loop>
+    <source src="../img/music_love.mp4" type="audio/mpeg">
+    เบราว์เซอร์ของคุณไม่รองรับเสียงเพลง
+  </audio>
+
+  <script>
+    window.addEventListener('click', () => {
+      const audio = document.getElementById('bg-music');
+      if (audio.paused) {
+        audio.play();
+      }
+    });
+  </script>
+</body>
+
+</html>
