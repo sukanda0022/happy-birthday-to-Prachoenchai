@@ -334,7 +334,7 @@ const pages = [
     leftPage.classList.add('flipping');
 
     setTimeout(() => {
-      leftPage.innerHTML = `<img src="${pages[currentPage].img}" alt="pic" style="width:100%; height:auto; border-radius:8px;">`;
+        leftPage.innerHTML = `<img src="${pages[currentPage].img}" alt="pic" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">`;
       rightPage.innerHTML = `<p>${pages[currentPage].text}</p>`;
       leftPage.classList.remove('flipping');
       currentPage++;
@@ -359,5 +359,6 @@ const pages = [
 </body>
 
 </html>
+
 
 
