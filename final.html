@@ -2,363 +2,419 @@
 <html lang="th">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>หน้าสุดท้าย</title>
-  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IG Clone – My Love Stories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #storyVideos::-webkit-scrollbar {
+            display: none;
+        }
 
-    body {
-      font-family: 'Itim', cursive;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      overflow-x: hidden;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      perspective: 1200px;
-      position: relative;
-    }
+        #storyVideos {
+            position: relative;
+            height: 90vh; /* สูง 90% ของ viewport height */
+            max-width: 90vw; /* กว้าง 90% ของ viewport width */
+            margin: 0 auto;
+        }
 
-    .book {
-      width: 60vw;
-      height: 90vh;
-      display: flex;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      position: relative;
-      z-index: 5;
-    }
+        #storyVideos video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            max-height: 100%;
+            max-width: 100%;
+            width: 100%;
+            height: 100%; /* เพิ่มเติมให้วิดีโอเต็มพื้นที่ */
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+            object-fit: contain;
+            display: none;
+        }
 
-    .page {
-      flex: 1;
-      padding: 2rem;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-size: 1.4rem;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-      transition: transform 0.6s ease;
-    }
+        .custom-max-w {
+            max-width: 40rem;
+        }
 
-    .left-page {
-      transform-origin: right center;
-      border-radius: 12px 0 0 12px;
-    }
+        .px-4 {
+            padding-left: 7rem !important;
+            padding-right: 7rem !important;
+        }
 
-    .right-page {
-      border-radius: 0 12px 12px 0;
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    .left-page.flipping {
-      transform: rotateY(-90deg);
-    }
-
-    .left-page img,
-    .left-page video {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .nav-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid white;
-      padding: 10px 20px;
-      color: white;
-      font-family: 'Itim', cursive;
-      font-size: 1.2rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
-      user-select: none;
-      z-index: 10;
-    }
-
-    .nav-button:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .star {
-      position: absolute;
-      background: white;
-      width: 2px;
-      height: 2px;
-      border-radius: 50%;
-      animation: twinkle 2s infinite ease-in-out alternate;
-      opacity: 0.8;
-    }
-
-    @keyframes twinkle {
-      0% {
-        opacity: 0.2;
-      }
-
-      50% {
-        opacity: 1;
-      }
-
-      100% {
-        opacity: 0.2;
-      }
-    }
-
-    .shooting-star {
-      position: fixed;
-      width: 100px;
-      height: 2px;
-      background: linear-gradient(45deg, white, rgba(255, 255, 255, 0));
-      border-radius: 50%;
-      transform: rotate(45deg);
-      animation: shooting 5s linear infinite;
-      opacity: 0.8;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    @keyframes shooting {
-      from {
-        transform: translate(-150px, -150px) rotate(45deg);
-        opacity: 1;
-      }
-
-      to {
-        transform: translate(150vw, 150vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .book {
-        width: 90vw;
-        height: 70vh;
-        flex-direction: column;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-      }
-
-      .page {
-        flex: none;
-        width: 100%;
-        height: 44%;
-        padding: 1rem;
-        font-size: 1rem;
-        border-radius: 0;
-        justify-content: center;
-        overflow-y: auto;
-      }
-
-      .left-page {
-        border-radius: 10px 10px 0 0;
-        transform-origin: center center !important;
-      }
-
-      .right-page {
-        border-radius: 0 0 10px 10px;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .left-page.flipping {
-        transform: none !important;
-      }
-
-      .left-page img,
-      .left-page video {
-        max-width: 100%;
-        max-height: 100%;
-        border-radius: 10px;
-        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-      }
-
-      .nav-button {
-        position: fixed;
-        bottom: 15px;
-        right: 15px;
-        top: auto;
-        padding: 8px 16px;
-        font-size: 1rem;
-        border-radius: 25px;
-        z-index: 20;
-      }
-    }
-
-    @media (max-width: 1024px) and (min-width: 481px) {
-  .book {
-    width: 80vw;
-    height: 75vh;
-    flex-direction: column;
-    border-radius: 12px;
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-  }
-
-  .page {
-    flex: none;
-    width: 100%;
-    height: 50%;
-    padding: 1.5rem;
-    font-size: 1.2rem;
-    overflow-y: auto;
-    justify-content: center;
-  }
-
-  .left-page {
-    border-radius: 12px 12px 0 0;
-    transform-origin: center center !important;
-  }
-
-  .right-page {
-    border-radius: 0 0 12px 12px;
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .left-page.flipping {
-    transform: none !important;
-  }
-
-  .left-page img,
-  .left-page video {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-  }
-
-  .nav-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    top: auto;
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    border-radius: 20px;
-    z-index: 20;
-  }
-}
-
-  </style>
+        .custom-progress-container {
+            padding-left: 7rem;
+            padding-right: 7rem;
+            max-width: 14rem;
+        }
+    </style>
 </head>
 
-<body>
-  <!-- ดาวระยิบ -->
-  <script>
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.top = `${Math.random() * 100}vh`;
-      star.style.animationDuration = `${Math.random() * 3 + 1}s`;
-      document.body.appendChild(star);
-    }
+<body class="bg-white text-gray-900">
+    <header class="flex justify-between items-center px-4 py-2 border-b shadow-sm sticky top-0 bg-white z-50">
+        <h1 class="text-xl font-bold">Instagram</h1>
+        <span class="text-pink-500 font-semibold">my_love</span>
+    </header>
 
-    // ดาวตกเฉียง
-    for (let i = 0; i < 8; i++) {
-      const shooting = document.createElement('div');
-      shooting.className = 'shooting-star';
-      shooting.style.top = `${Math.random() * 50}vh`;
-      shooting.style.left = `-${Math.random() * 200}px`;
-      shooting.style.animationDuration = `${3 + Math.random() * 2}s`;
-      shooting.style.animationDelay = `${i * 3 + Math.random() * 2}s`;
-      document.body.appendChild(shooting);
-    }
-  </script>
+    <section class="flex flex-col items-center mt-6">
+        <div onclick="showStoryPopup()"
+            class="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-pink-500 to-yellow-400 cursor-pointer hover:scale-105 transition-transform duration-300">
+            <div class="w-full h-full rounded-full bg-white p-1 overflow-hidden">
+                <img src="img/22.jpg" class="w-full h-full rounded-full object-cover" alt="โปรไฟล์แฟน">
+            </div>
+        </div>
 
-  <!-- Book Layout -->
-  <div class="book">
-    <div class="page left-page">
-      <video src="img/jay.mp4" controls autoplay loop muted playsinline></video>
+        <h2 class="mt-2 font-semibold text-lg">@Happy birthday Prachoenchai 💖</h2>
+        <div class="flex gap-6 text-sm mt-3">
+            <div class="text-center">
+                <p class="font-bold">6</p>
+                <p class="text-gray-500">โพสต์</p>
+            </div>
+            <div class="text-center">
+                <p class="font-bold">999M</p>
+                <p class="text-gray-500">ผู้ติดตาม</p>
+            </div>
+            <div class="text-center">
+                <p class="font-bold">1</p>
+                <p class="text-gray-500">กำลังติดตาม</p>
+            </div>
+        </div>
+        <p class="mt-4 text-center text-sm text-gray-600 px-6">23-08-2001 <br> -------------</p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="px-1 mt-6 space-y-1">
+        <!-- Row 1 -->
+        <div class="grid grid-cols-3 gap-1">
+            <div class="relative group cursor-pointer"
+                onclick="openModal('img/1.jpg', 'ขอให้เธอแข็งแรงทั้งกายและใจ <br>  💖')">
+                <img src="img/1.jpg" class="w-full aspect-square object-cover" alt="ภาพ 1">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+            <div class="relative group cursor-pointer"
+                onclick="openModal('img/5.jpg', 'ขอให้ทุกวันเป็นวันที่เธอรู้สึกปลอดภัยและอบอุ่น <br>  💖')">
+                <img src="img/5.jpg" class="w-full aspect-square object-cover" alt="ภาพ 2">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+            <div class="relative group cursor-pointer"
+                onclick="openModal('img/9.jpg', 'ขอให้มีวันที่ดี ไม่เจอเรื่องหนักใจมากเกินไป <br> 💫 ')">
+                <img src="img/9.jpg" class="w-full aspect-square object-cover" alt="ภาพ 3">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="w-full flex justify-center bg-black">
+            <div class="relative group w-full max-w-2xl">
+                <video class="w-full h-auto rounded-md" autoplay loop playsinline>
+                    <source src="img/jay.mp4" type="video/mp4" />
+                    เบราว์เซอร์ของคุณไม่รองรับวิดีโอ
+                </video>
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm rounded-md">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="grid grid-cols-3 gap-1">
+            <div class="relative group cursor-pointer"
+                onclick="openModal('img/12.jpg', 'ขอให้เธอมีรอยยิ้มในทุกวัน และความสุขในทุกย่างก้าว <br> 💕')">
+                <img src="img/12.jpg" class="w-full aspect-square object-cover" alt="ภาพ 4">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+            <div class="relative group cursor-pointer"
+                onclick="openModal('img/23.jpg', 'ใครไม่ภูมิใจในตัวเธอก็ช่าง มีพี่อยู่ทั้งคนนะ <br> 💐')">
+                <img src="img/23.jpg" class="w-full aspect-square object-cover" alt="ภาพ 5">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+            <div class="relative group cursor-pointer"
+                onclick="openModal('../img/8.jpg', 'ขอบคุณที่ทำงานหนักเพื่อมีกันนะ <br> 🤍')">
+                <img src="img/8.jpg" class="w-full aspect-square object-cover" alt="ภาพ 6">
+                <div
+                    class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-sm">
+                    ❤️ 99 &nbsp; 💬 12
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg max-w-md w-full p-4 relative flex flex-col items-center">
+            <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-500">✖️</button>
+            <img id="modalImage" src="" alt="ใหญ่" class="w-full rounded mb-3 max-w-full max-h-[60vh] object-contain">
+            <p id="modalCaption" class="text-center text-sm text-gray-700 mx-auto max-w-xs whitespace-pre-line"></p>
+        </div>
     </div>
-    <div class="page right-page">
-      <p>สุขสันต์วันเกิดนะ <img src="img/icon_cake.png" alt="เค้ก" style="width:50px; vertical-align:bottom;">
-      </p>
-      <p>ขอให้เธอแข็งแรงทั้งกายและใจ </p>
-      <p> ขอให้ทุกวันเป็นวันที่เธอรู้สึกปลอดภัยและอบอุ่น  </p>
-      <p>ขอให้มีวันที่ดี ไม่เจอเรื่องหนักใจมากเกินไป 💫</p>
-      <p>ขอให้เธอมีรอยยิ้มในทุกวัน และความสุขในทุกย่างก้าว</p>
-      <p>อย่าลืมพักผ่อนดูแลตัวเองเยอะๆ น้องหนูของพี่ </p>
+    <nav
+        class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-inner flex justify-around py-2 text-gray-500 text-xl">
+        <button>🏠</button>
+        <button>🔍</button>
+        <button>➕</button>
+        <button>👤</button>
+    </nav>
+
+    <!-- Story Popup แบบหลายสตอรี่ แสดงทีละวิดีโอ ใช้ display แทน translateX -->
+    <div id="storyPopup" class="fixed inset-0 bg-black bg-opacity-95 z-50 hidden flex flex-col">
+        <!-- Header -->
+        <div class="flex justify-between items-center text-white px-4 pt-4 pb-2 max-w-md w-full mx-auto">
+            <div class="flex items-center space-x-3">
+                <img src="../img/22.jpg" alt="โปรไฟล์แฟน"
+                    class="w-10 h-10 rounded-full object-cover border-2 border-pink-500" />
+                <span class="font-semibold">@my_love</span>
+            </div>
+            <button onclick="hideStoryPopup()"
+                class="text-3xl font-bold hover:text-pink-500 transition-colors focus:outline-none">×</button>
+        </div>
+
+        <!-- Progress Bars -->
+        <div id="progressContainer"
+            class="flex gap-[3px] h-[4px] w-full mb-4 mx-auto custom-progress-container max-w-[40rem]">
+
+            <!-- progress bars created dynamically -->
+        </div>
+
+        <!-- Videos Container -->
+        <div id="storyVideos" class="w-full mx-auto relative" style="height: 90vh; max-width: 90vw;">
+            <!-- Video elements inserted dynamically -->
+        </div>
     </div>
+    <script>
+        function openModal(imageSrc, captionHtml) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalCaption').innerHTML = captionHtml; // ใช้ innerHTML เพื่อแสดง <br> 
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
 
-    <button class="nav-button" onclick="nextPage()">หน้าต่อไป</button>
-  </div>
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
+    <script>
+        const storyPopup = document.getElementById('storyPopup');
+        const storyVideosContainer = document.getElementById('storyVideos');
+        const progressContainer = document.getElementById('progressContainer');
 
- <script>
-const pages = [
-  {
-    img: 'img/12.jpg',
-    text: `เค้าอยากบอกว่า... เธอคือความสุขที่สว่างที่สุดบนฟ้า`
-  },
-  {
-    img: 'img/12.jpg',
-    text: `ความทรงจำกับเธอ เหมือนดาวระยิบระยับในใจเค้า`
-  },
-  {
-    img: 'img/12.jpg',
-    text: `ไม่ว่าอะไรจะเกิดขึ้น เค้าก็จะอยู่ข้างๆ เธอเสมอ`
-  },
-  {
-    img: 'img/12.jpg',
-    text: `สุขสันต์วันเกิดอีกครั้ง ขอให้เธอพบเจอแต่สิ่งดีๆ 🤍`
-  },
-  {
-    img: 'img/12.jpg',
-    text: `สุดท้าย... เค้ารักเธอมากนะ 🥺✨`
-  }
-];
+        // รายการวิดีโอสตอรี่ (แก้ path ให้ตรงกับของคุณ)
+        const stories = [
+            { src: '../img/story1.mp4' },
+            { src: '../img/story2.mp4' },
+            { src: '../img/story3.mp4' }
+        ];
 
+        let currentStoryIndex = 0;
+        let animationFrameId = null;
+        let startTime = null;
+        let duration = 5; // fallback
 
-  let currentPage = 1;
+        function createProgressBars() {
+            progressContainer.innerHTML = '';
+            for (let i = 0; i < stories.length; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'flex-1 bg-white/30 rounded-full h-full overflow-hidden';
+                const fill = document.createElement('div');
+                fill.className = 'bg-white h-full w-0 transition-all duration-300 ease-linear';
+                bar.appendChild(fill);
+                progressContainer.appendChild(bar);
+            }
+        }
 
-  function nextPage() {
-    const leftPage = document.querySelector('.left-page');
-    const rightPage = document.querySelector('.right-page');
-    const btn = document.querySelector('.nav-button');
+        function createVideos() {
+            storyVideosContainer.innerHTML = '';
+            stories.forEach((story, index) => {
+                const video = document.createElement('video');
+                video.src = story.src;
+                video.className =
+                    'w-full h-full rounded-lg shadow-lg object-contain absolute top-0 left-0 right-0 bottom-0 mx-auto my-auto';
+                video.setAttribute('playsinline', '');
+                video.preload = 'auto';
+                video.style.display = 'none'; // ซ่อนก่อนแสดง
+                storyVideosContainer.appendChild(video);
+            });
+        }
 
-    if (currentPage >= pages.length) {
-      btn.style.display = "none";
-      return;
-    }
+        function showStoryPopup() {
+            storyPopup.classList.remove('hidden');
+            currentStoryIndex = 0;
+            updateStories();
+            playCurrentStory(true); // unmute เริ่มเล่นพร้อมเสียง
+        }
 
-    leftPage.classList.add('flipping');
+        // แก้ไขฟังก์ชัน hideStoryPopup ให้หยุดวิดีโอทันทีและรีเซ็ตสถานะทุกอย่าง
+        function hideStoryPopup() {
+            storyPopup.classList.add('hidden');
 
-    setTimeout(() => {
-        leftPage.innerHTML = `<img src="${pages[currentPage].img}" alt="pic" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">`;
-      rightPage.innerHTML = `<p>${pages[currentPage].text}</p>`;
-      leftPage.classList.remove('flipping');
-      currentPage++;
-    }, 600);
-  }
-</script>
+            // หยุดและรีเซ็ตวิดีโอทุกตัว
+            const videos = storyVideosContainer.querySelectorAll('video');
+            videos.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+                video.style.display = 'none';
+                video.muted = true;
+                // กรณี browser กำลังโหลด ให้หยุดโหลดด้วย
+                try {
+                    video.src = '';
+                    video.load();
+                } catch { }
+            });
 
-  <!-- 🎵 เล่นเพลงเมื่อผู้ใช้แตะหน้าจอ -->
-  <audio id="bg-music" loop>
-    <source src="img/music_love.mp3" type="audio/mpeg">
-    เบราว์เซอร์ของคุณไม่รองรับเสียงเพลง
-  </audio>
+            resetProgressBars();
+            cancelAnimationFrame(animationFrameId);
+            startTime = null;
+        }
 
-  <script>
-    window.addEventListener('click', () => {
-      const audio = document.getElementById('bg-music');
-      if (audio.paused) {
-        audio.play();
-      }
-    });
-  </script>
+        function pauseAllVideos() {
+            const videos = storyVideosContainer.querySelectorAll('video');
+            videos.forEach((v) => {
+                v.pause();
+                v.style.display = 'none';
+                v.muted = true;
+            });
+        }
+
+        function playCurrentStory(unmute = false) {
+            pauseAllVideos();
+            const videos = storyVideosContainer.querySelectorAll('video');
+            const video = videos[currentStoryIndex];
+            if (!video) return;
+
+            video.style.display = 'block';
+            video.currentTime = 0;
+            video.muted = !unmute;
+            video.play();
+
+            duration = video.duration || 5;
+            startTime = null;
+            animateProgressBar();
+
+            video.onloadedmetadata = () => {
+                duration = video.duration;
+            };
+
+            video.onended = () => {
+                nextStory();
+            };
+        }
+
+        function animateProgressBar(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / (duration * 1000), 1);
+            updateProgressBar(progress);
+            if (progress < 1) {
+                animationFrameId = requestAnimationFrame(animateProgressBar);
+            }
+        }
+
+        function updateProgressBar(progress) {
+            const bars = progressContainer.children;
+            for (let i = 0; i < bars.length; i++) {
+                const fill = bars[i].firstChild;
+                if (i < currentStoryIndex) {
+                    fill.style.width = '100%';
+                } else if (i === currentStoryIndex) {
+                    fill.style.width = (progress * 100) + '%';
+                } else {
+                    fill.style.width = '0%';
+                }
+            }
+        }
+
+        function resetProgressBars() {
+            const bars = progressContainer.children;
+            for (let i = 0; i < bars.length; i++) {
+                bars[i].firstChild.style.width = '0%';
+            }
+        }
+
+        function nextStory() {
+            if (currentStoryIndex < stories.length - 1) {
+                currentStoryIndex++;
+                playCurrentStory(true);
+            } else {
+                hideStoryPopup();
+            }
+        }
+
+        function prevStory() {
+            if (currentStoryIndex > 0) {
+                currentStoryIndex--;
+                playCurrentStory(true);
+            }
+        }
+
+        function updateStories() {
+            createProgressBars();
+            createVideos();
+        }
+
+        // กดซ้าย/ขวาใน popup เลื่อนไปสตอรี่ก่อนหน้า/ถัดไป
+        storyPopup.addEventListener('click', (e) => {
+            const x = e.clientX;
+            const width = window.innerWidth;
+            if (x < width / 2) {
+                prevStory();
+            } else {
+                nextStory();
+            }
+        });
+
+        // โหลดเริ่มต้น
+        updateStories();
+    </script>
+    <script>
+        const galleryVideo = document.querySelector('section video'); // วิดีโอแถวที่ 2
+
+        function muteGalleryVideo() {
+            if (galleryVideo) {
+                galleryVideo.muted = true;
+            }
+        }
+
+        function unmuteGalleryVideo() {
+            if (galleryVideo) {
+                galleryVideo.muted = false;
+            }
+        }
+
+        // แทรกใน showStoryPopup เพื่อ mute วิดีโอแถว 2
+        const originalShowStoryPopup = showStoryPopup;
+        showStoryPopup = function () {
+            muteGalleryVideo();
+            originalShowStoryPopup();
+        }
+
+        // แทรกใน hideStoryPopup เพื่อ unmute วิดีโอแถว 2
+        const originalHideStoryPopup = hideStoryPopup;
+        hideStoryPopup = function () {
+            unmuteGalleryVideo();
+            originalHideStoryPopup();
+        }
+    </script>
+
 </body>
 
 </html>
-
-
-
