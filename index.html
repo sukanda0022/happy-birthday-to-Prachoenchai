@@ -8,14 +8,51 @@
   <style>
     body {
       font-family: 'Itim', cursive;
-      background: linear-gradient(to top right, #ffffff, #ffffff);
+      background: linear-gradient(135deg, #FFD2AA, #FF9F9F);
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       flex-direction: column;
       text-align: center;
       overflow: hidden;
+      position: relative;
+      color: #4A2C00;
+      user-select: none;
+    }
+
+    /* container สำหรับประกายแสง */
+    .sparkles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 0;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #fff9 70%, transparent 70%);
+      border-radius: 50%;
+      filter: drop-shadow(0 0 5px #fff9);
+      animation: sparkle-flicker 3s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes sparkle-flicker {
+      0%,
+      100% {
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
     }
 
     h1 {
@@ -56,6 +93,7 @@
       margin-top: 30px;
       overflow: hidden;
       display: none;
+      z-index: 10;
     }
 
     .loader-bar {
@@ -123,6 +161,8 @@
       gap: 10px;
       max-width: 100%;
       margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
     }
 
     .header-wrapper img {
@@ -235,3 +275,4 @@
 </body>
 
 </html>
+
