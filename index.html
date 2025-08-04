@@ -233,7 +233,7 @@
     <div class="heart" id="heart">❤️</div>
   </div>
 
-  <script>
+ <script>
     function startLoading() {
       document.querySelector('.start-btn').style.display = 'none';
       const loader = document.getElementById('loaderContainer');
@@ -271,8 +271,21 @@
         heartEl.remove();
       }, 2000);
     }
+
+    // สร้างประกายแสง sparkles
+    const sparklesContainer = document.querySelector('.sparkles');
+    for (let i = 0; i < 50; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = (Math.random() * 3) + 's';
+      sparkle.style.width = sparkle.style.height = (Math.random() * 4 + 2) + 'px';
+      sparklesContainer.appendChild(sparkle);
+    }
   </script>
 </body>
 
 </html>
+
 
