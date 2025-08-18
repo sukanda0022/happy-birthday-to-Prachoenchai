@@ -333,7 +333,7 @@
   }
 
   .bottom-images img {
-    width: 150px;
+    width: 200px;
     height: auto;
   }
   </style>
@@ -377,17 +377,17 @@
   <section class="px-4 mt-10 space-y-3 max-w-5xl mx-auto">
     <!-- Row 1 -->
     <div class="grid grid-cols-3 gap-4">
-      <div class="gallery-item" onclick="openModal('../img/1.jpg', 'ขอให้เธอแข็งแรงทั้งกายและใจ <br> 💖')">
+      <div class="gallery-item" onclick="openModal('img/1.jpg', 'ขอให้เธอแข็งแรงทั้งกายและใจ <br> 💖')">
         <img src="img/1.jpg" alt="ภาพ 1" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
       <div class="gallery-item"
-        onclick="openModal('../img/5.jpg', 'ขอให้ทุกวันเป็นวันที่เธอรู้สึกปลอดภัยและอบอุ่น <br> 💖')">
+        onclick="openModal('img/5.jpg', 'ขอให้ทุกวันเป็นวันที่เธอรู้สึกปลอดภัยและอบอุ่น <br> 💖')">
         <img src="img/5.jpg" alt="ภาพ 2" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
       <div class="gallery-item"
-        onclick="openModal('../img/9.jpg', 'ขอให้มีวันที่ดี ไม่เจอเรื่องหนักใจมากเกินไป <br> 💫 ')">
+        onclick="openModal('img/9.jpg', 'ขอให้มีวันที่ดี ไม่เจอเรื่องหนักใจมากเกินไป <br> 💫 ')">
         <img src="img/9.jpg" alt="ภาพ 3" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
@@ -411,16 +411,16 @@
     <!-- Row 3 -->
     <div class="grid grid-cols-3 gap-4">
       <div class="gallery-item"
-        onclick="openModal('../img/12.jpg', 'ขอให้เธอมีรอยยิ้มในทุกวัน และความสุขในทุกย่างก้าว <br> 💕')">
+        onclick="openModal('img/12.jpg', 'ขอให้เธอมีรอยยิ้มในทุกวัน และความสุขในทุกย่างก้าว <br> 💕')">
         <img src="img/12.jpg" alt="ภาพ 4" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
       <div class="gallery-item"
-        onclick="openModal('../img/23.jpg', 'ใครไม่ภูมิใจในตัวเธอก็ช่าง มีพี่อยู่ทั้งคนนะ <br> 💐')">
+        onclick="openModal('img/23.jpg', 'ใครไม่ภูมิใจในตัวเธอก็ช่าง มีพี่อยู่ทั้งคนนะ <br> 💐')">
         <img src="img/23.jpg" alt="ภาพ 5" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
-      <div class="gallery-item" onclick="openModal('../img/8.jpg', 'ขอบคุณที่ทำงานหนักเพื่อมีกันนะ <br> 🤍')">
+      <div class="gallery-item" onclick="openModal('img/8.jpg', 'ขอบคุณที่ทำงานหนักเพื่อมีกันนะ <br> 🤍')">
         <img src="img/8.jpg" alt="ภาพ 6" />
         <div class="overlay">❤️ 99 &nbsp; 💬 12</div>
       </div>
@@ -515,9 +515,9 @@
     const progressContainer = document.getElementById('progressContainer');
 
     const stories = [
-      { src: '../img/story1.mp4' },
-      { src: '../img/story2.mp4' },
-      { src: '../img/story3.mp4' }
+      { src: 'img/story1.mp4' },
+      { src: 'img/story2.mp4' },
+      { src: 'img/story3.mp4' }
     ];
 
     let currentStoryIndex = 0;
@@ -700,3 +700,4 @@
 </body>
 
 </html>
+
