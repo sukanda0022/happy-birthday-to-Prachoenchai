@@ -3,24 +3,96 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>เซอร์ไพรส์วันเกิด</title>
+  <title>เซอร์ไพรส์วันเกิด - ปุ่มดาวหมุนพร้อมกรอบ</title>
   <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet" />
+  <link rel="icon" href="img/icon_cake.png" type="image/png" />
+
   <style>
     body {
       font-family: 'Itim', cursive;
-      background: linear-gradient(to top right, #ffffff, #ffffff);
+      background: #fff;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
       text-align: center;
       overflow: hidden;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .star,
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .star {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fff;
+      animation: floatStar 3s ease-out forwards;
+    }
+
+    @keyframes floatStar {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-150px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .floating-heart {
+      color: #ff66b2;
+      font-size: 1.2rem;
+      animation: floatUp 2s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
     }
 
     h1 {
       margin-bottom: 20px;
       color: #d63384;
+    }
+
+    .fancy-title {
+      animation: popTitle 1s ease-out;
+    }
+
+    @keyframes popTitle {
+      0% {
+        transform: scale(0.8) translateY(20px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
     }
 
     .fancy-title div {
@@ -29,21 +101,27 @@
       line-height: 1.3;
     }
 
-    .start-btn {
-      padding: 15px 30px;
-      background-color: #ff66b2;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease;
-      z-index: 10;
+    .header-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      margin-bottom: 20px;
     }
 
-    .start-btn:hover {
-      transform: scale(1.05);
+    .header-wrapper img {
+      width: 25vw;
+      max-width: 200px;
+      height: auto;
+    }
+
+    .header-wrapper video {
+      display: block;
+      margin: 0 auto;
+      max-width: 40%;
+      border-radius: 20px;
     }
 
     .loader-container {
@@ -53,17 +131,16 @@
       border-radius: 20px;
       background-color: #fff;
       box-shadow: inset 0 0 5px #aaa;
-      margin-top: 30px;
       overflow: hidden;
       display: none;
     }
 
     .loader-bar {
       height: 100%;
-      background: repeating-linear-gradient(45deg, #ff66b2, #ff66b2 10px, #ff99cc 10px, #ff99cc 20px);
       width: 0%;
-      transition: width 0.2s ease-in-out;
+      background: repeating-linear-gradient(45deg, #ff66b2, #ff66b2 10px, #ff99cc 10px, #ff99cc 20px);
       border-radius: 20px;
+      transition: width 0.2s ease-in-out;
     }
 
     .heart {
@@ -73,7 +150,6 @@
       font-size: 2rem;
       opacity: 0;
       transition: transform 0.5s ease, opacity 0.3s ease;
-      z-index: 6;
     }
 
     .heart.active {
@@ -95,71 +171,112 @@
       }
     }
 
-    .floating-heart {
-      position: absolute;
-      color: #ff66b2;
-      font-size: 1.2rem;
-      animation: floatUp 2s ease-out forwards;
-      pointer-events: none;
+    .btn-conteiner {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      --color-text: #fff;
+      --color-background: #ff135a;
     }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(-100px);
-        opacity: 0;
-      }
-    }
-
-    .header-wrapper {
+    .btn-content {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      max-width: 100%;
-      margin-bottom: 20px;
+      padding: 5px 30px;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 30px;
+      color: var(--color-text);
+      background: var(--color-background);
+      border-radius: 100px;
+      box-shadow: 0 0 0.2em 0 var(--color-background);
+      transition: 1s;
     }
 
-    .header-wrapper img {
-      width: 25vw;
-      max-width: 200px;
-      height: auto;
+    .btn-content:hover,
+    .btn-content:focus {
+      animation: btn-content 1s;
+      outline: 0.1em solid transparent;
+      outline-offset: 0.2em;
+      box-shadow: 0 0 0.4em 0 var(--color-background);
     }
 
-    /* Responsive สำหรับมือถือ */
-    @media (max-width: 480px) {
+    .btn-content .icon-arrow {
+      transition: 0.5s;
+      margin-right: 0;
+      transform: scale(0.6);
+    }
+
+    .btn-content:hover .icon-arrow {
+      margin-right: 25px;
+    }
+
+    .icon-arrow {
+      width: 20px;
+      margin-left: 15px;
+      position: relative;
+      top: 6%;
+    }
+
+    #arrow-icon-one {
+      transition: 0.4s;
+      transform: translateX(-60%);
+    }
+
+    #arrow-icon-two {
+      transition: 0.5s;
+      transform: translateX(-30%);
+    }
+
+    .btn-content:hover #arrow-icon-one {
+      transform: translateX(0%);
+      animation: color_anim 1s infinite 0.6s;
+    }
+
+    .btn-content:hover #arrow-icon-two {
+      transform: translateX(0%);
+      animation: color_anim 1s infinite 0.4s;
+    }
+
+    .btn-content:hover #arrow-icon-three {
+      animation: color_anim 1s infinite 0.2s;
+    }
+
+    @keyframes color_anim {
+
+      0%,
+      100% {
+        fill: white;
+      }
+
+      50% {
+        fill: var(--color-background);
+      }
+    }
+
+    @keyframes btn-content {
+      0% {
+        outline: 0.2em solid var(--color-background);
+        outline-offset: 0;
+      }
+    }
+
+    @media (max-width:480px) {
       .header-wrapper {
         gap: 8px;
         padding: 0 15px;
-        align-items: center;
         margin: 0 auto 20px;
       }
 
       .header-wrapper img {
         width: 70px;
-        height: auto;
         max-width: none;
       }
 
-      .header-wrapper h1,
-      .fancy-title {
+      .fancy-title,
+      .header-wrapper h1 {
         font-size: 1.4rem;
-      }
-
-      .fancy-title div {
-        white-space: nowrap;
-        margin: 0;
-        line-height: 1.3;
-      }
-
-      .start-btn {
-        font-size: 1.2rem;
-        padding: 12px 25px;
       }
 
       .loader-container {
@@ -180,59 +297,50 @@
   <div class="header-wrapper">
     <img src="img/hbd1.jpg" alt="หัวใจซ้าย" />
     <h1 class="fancy-title">
-      <div>Your birthday</div>
+      <div>Birthday</div>
       <div>To</div>
       <div>Prachoenchai</div>
     </h1>
     <img src="img/hbd2.jpg" alt="หัวใจขวา" />
+    <video id="cakeVideo" autoplay muted playsinline style="display:none; max-width:40%; border-radius:20px;">
+      <source src="img/cake.mp4" type="video/mp4">เบราว์เซอร์คุณไม่รองรับวิดีโอ
+    </video>
+    <div class="loader-container" id="loaderContainer">
+      <div class="loader-bar" id="loaderBar"></div>
+    </div>
   </div>
 
-  <button class="start-btn" onclick="startLoading()">CLICK HERE</button>
-
-  <div class="loader-container" id="loaderContainer">
-    <div class="loader-bar" id="loaderBar"></div>
-    <div class="heart" id="heart">❤️</div>
+  <div class="btn-conteiner">
+    <a class="btn-content" href="pass.html" onclick="startLoading(event)">
+      <span class="btn-title">NEXT</span>
+      <span class="icon-arrow">
+        <svg width="66px" height="43px" viewBox="0 0 66 43" xmlns="http://www.w3.org/2000/svg">
+          <g id="arrow" fill="none" fill-rule="evenodd">
+            <path id="arrow-icon-one"
+              d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z"
+              fill="#FFFFFF"></path>
+            <path id="arrow-icon-two"
+              d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z"
+              fill="#FFFFFF"></path>
+            <path id="arrow-icon-three"
+              d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z"
+              fill="#FFFFFF"></path>
+          </g>
+        </svg>
+      </span>
+    </a>
   </div>
+
+  <div class="heart" id="heart">💖</div>
 
   <script>
-    function startLoading() {
-      document.querySelector('.start-btn').style.display = 'none';
-      const loader = document.getElementById('loaderContainer');
-      const bar = document.getElementById('loaderBar');
-      const heart = document.getElementById('heart');
-
-      loader.style.display = 'block';
-
-      let percent = 0;
-      let interval = setInterval(() => {
-        percent += 1;
-        bar.style.width = percent + '%';
-
-        createFloatingHeart();
-
-        if (percent >= 100) {
-          clearInterval(interval);
-          heart.classList.add('active');
-
-          setTimeout(() => {
-            window.location.href = 'pass.html';
-          }, 1500);
-        }
-      }, 30);
-    }
-
-    function createFloatingHeart() {
-      const heartEl = document.createElement('div');
-      heartEl.classList.add('floating-heart');
-      heartEl.style.left = Math.random() * 90 + '%';
-      heartEl.textContent = '💖';
-      document.body.appendChild(heartEl);
-
-      setTimeout(() => {
-        heartEl.remove();
-      }, 2000);
-    }
+    document.addEventListener("DOMContentLoaded", () => { for (let i = 0; i < 25; i++)setTimeout(createStar, i * 100) });
+    function createStar() { const s = document.createElement("div"); s.className = "star"; s.style.left = Math.random() * 100 + "%"; s.style.top = 50 + Math.random() * 50 + "%"; document.body.appendChild(s); setTimeout(() => s.remove(), 3000) }
+    function createFloatingHeart() { const h = document.createElement("div"); h.classList.add("floating-heart"); h.style.left = Math.random() * 90 + "%"; h.textContent = "💖"; document.body.appendChild(h); setTimeout(() => h.remove(), 2000) }
+    function startLoading(e) { e.preventDefault(); document.querySelector(".btn-conteiner").style.display = "none"; const l = document.getElementById("loaderContainer"), b = document.getElementById("loaderBar"); l.style.display = "block"; document.querySelectorAll(".header-wrapper img,.header-wrapper .fancy-title").forEach(el => el.style.display = "none"); const v = document.getElementById("cakeVideo"); v.style.display = "block"; v.play(); const h = document.getElementById("heart"); let p = 0; let i = setInterval(() => { p++; b.style.width = p + "%"; createFloatingHeart(); if (p >= 100) { clearInterval(i); h.classList.add("active"); setTimeout(() => window.location.href = "pass.html", 1500) } }, 30) }
   </script>
+
+  
 </body>
 
 </html>
