@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Example</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- โหลดฟอนต์ Kanit -->
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <style>
+    .kanit {
+      font-family: 'Kanit', sans-serif;
+      color: #ff69b4; /* สีชมพู */
+    }
+    .heart-img {
+      width: 64px;  /* ขนาดใหม่ */
+      height: 64px; /* ขนาดใหม่ */
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-gray-200">
+
+  <div id="card" class="h-72 relative border-2 border-blue-600 bg-gradient-to-b from-blue-600 from-[12%] via-[12%] via-white to-[70%] to-white shadow-lg rounded-xl w-72 flex justify-center items-center text-white p-4">
+    <!-- ปุ่มปิด -->
+    <span id="closeBtn" class="rounded-md px-2 py-[.6em] absolute top-[2px] right-0 border border-white text-[.6em] mr-1 bg-gradient-to-b from-red-800 via-red-500 to-red-800 font-bold cursor-pointer"> ╳ </span>
+    <!-- ปุ่ม ▣ -->
+    <span class="rounded-md px-2 py-[.6em] absolute top-[2px] right-7 border border-white text-[.6em] mr-2 bg-gradient-to-b from-blue-800 via-blue-500 to-blue-800 cursor-pointer"> ▣ </span>
+    <!-- ปุ่ม — -->
+    <span class="rounded-md px-2 py-[.6em] absolute top-[2px] right-14 border border-white text-[.6em] mr-3 bg-gradient-to-b from-blue-800 via-blue-500 to-blue-800 cursor-pointer"> — </span>
+    
+    <!-- ข้อความและรูปตรงกลาง -->
+    <div class="flex flex-col justify-center items-center text-center">
+      <p id="cardText" class="kanit font-bold text-lg">
+        แววตาใสๆแบบนี้<br>ขอให้อยู่กับเธอไปนานๆ
+      </p>
+      <img src="../img/final1.png" alt="heart" class="heart-img mt-2">
+    </div>
+  </div>
+
+  <script>
+    const closeBtn = document.getElementById('closeBtn');
+    const cardText = document.getElementById('cardText');
+
+    closeBtn.addEventListener('click', () => {
+      cardText.innerHTML = 'จบแล้วจ้าาาาา';
+    });
+  </script>
+
+</body>
+</html>
